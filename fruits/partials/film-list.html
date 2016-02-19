@@ -1,0 +1,24 @@
+<div id="list" infinite-scroll="loadMore()" infinite-scroll-distance="2">
+	<ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-8">
+	    <li ng-repeat="film in films | filter:rechercher | filter:{genres:gfilter} | orderBy:rtri:rsens() | limitTo:loadNb">
+	    	<a title="Voir ce film" href="#/films/{{ film.tmdbid }}">
+		        <img ng-src="http://fruits/api/data/films/poster/{{ film.tmdbid }}_w300.jpg" alt="{{ film.titlefr }}" /><br />
+		        {{ film.titlefr }}
+	    	</a>
+	        <span class="legende">({{ film.date }})</span>
+	    </li>
+	</ul>
+</div>
+
+<div class="text-center" ng-hide="films.length > 0">
+<p><br /><br /><br /><br /></p>
+<img src="images/load_big.gif" alt="Chargement" />
+</div>
+
+<div ng-hide="films.length == 0">
+	<div class="text-center" ng-show="(films | filter:rechercher).length == 0">
+	<p><br /></p>
+	Appuyez sur Entrée pour rechercher dans tous les fichiers ;-)<br /><br />
+	Si vous trouvez qu'il manque un film, <a title="Demander le téléchargement d'un film" href="#/suggest">vous pouvez le réclamer ici</a>.
+	</div>
+</div>

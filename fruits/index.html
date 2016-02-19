@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr" ng-app="fruitsApp">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Fruits Desktop</title>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/foundation.css">
+  <link href="bower_components/open-iconic/font/css/open-iconic-foundation.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css?m2=3">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <script src="js/vendor/modernizr.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script type="text/javascript">
+    window.moment = require(__dirname+'/bower_components/moment/moment.js');
+    window.wjs = require("wcjs-player");
+    window.electron = require('electron');
+    window.remote = require('remote');
+    window.videoPlayer = undefined;
+    window.ipcRenderer = window.electron.ipcRenderer;
+    electron.webFrame.setZoomLevelLimits(1, 1);
+    window.storage = remote.require('electron-json-storage');
+    window.$ = window.jQuery = require(__dirname+'/bower_components/jquery/dist/jquery.min.js');
+  </script>
+  <script src="bower_components/angular-moment/angular-moment.js"></script>
+  <script src="bower_components/moment/lang/fr.js"></script>
+  <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkimages.js?u=2"></script>
+  <!-- <script src="js/animations.js"></script> -->
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/directives.js"></script>
+  <!-- Subtitle size -->
+  <style type="text/css">
+  .wcp-subtitle-text {
+  	font-size: 30px !important;
+  }
+  </style>
+</head>
+<body key-trap>
+<div id="header">
+  <div id="titre" class="hide-for-small-only">
+    <span class="leger">Il a </span>Fruits<span class="leger">, il a tout compris !</span>
+  </div>
+  <div id="menu">
+    <div id="categories">
+        <a class="cat" href="#/films{{ (navigation.film && page != 'films') && '/' + navigation.film || '' }}" class="cat" ng-class="page == 'films' && 'actif'">
+            Films
+        </a>
+        <a title="Séries" href="#/series{{ (navigation.serie.id && page != 'series') && '/' + navigation.serie.id || '' }}" class="cat" ng-class="page == 'series' && 'actif'">
+            Séries
+        </a>
+        <a title="Nouveautés" href="#/new" class="cat" ng-class="page == 'new' && 'actif'">
+            Nouveautés
+        </a>
+        <a title="Serveurs" href="#/serveurs" class="cat" ng-class="page == 'serveurs' && 'actif'">
+            Serveurs
+        </a>
+        <div class="cat" ng-hide="page == 'serveurs'">
+            Tri :<span class="select">
+                  <select ng-model="rtri" ng-init="rtri = 'popularity'" style="width: 110px; padding-right: 0px">
+                    <option value="popularity">Popularité</option>
+                    <option value="title">Nom</option>
+                    <option value="release_date">Date de sortie</option>
+                  </select>
+                </span>
+        </div>
+        <div class="cat" ng-hide="page != 'films'">
+            Genre :<span class="select">
+                <select ng-model="gfilter" ng-init="gfilter = ''">
+		    <option value="">Tous</option>
+		    <option value="Action">Action</option>
+		    <option value="Aventure">Aventure</option>
+		    <option value="Comédie">Comédie</option>
+		    <option value="Crime">Crime</option>
+		    <option value="Documentaire">Documentaire</option>
+		    <option value="Drame">Drame</option>
+		    <option value="Familial">Familial</option>
+		    <option value="Fantastique">Fantastique</option>
+		    <option value="Film Noir">Film Noir</option>
+		    <option value="Guerre">Guerre</option>
+		    <option value="Horreur">Horreur</option>
+		    <option value="Musical">Musical</option>
+		    <option value="Mystère">Mystère</option>
+		    <option value="Romance">Romance</option>
+		    <option value="Science-Fiction">Science-Fiction</option>
+		    <option value="Suspense">Suspense</option>
+		    <option value="Thriller">Thriller</option>
+		    <option value="Western">Western</option>
+		</select>
+	    </span>
+	</div>
+    </div>
+    <div id="options" class="hide-for-small-only">
+    	<form ng-submit="search()">
+            <a id="bdl" href="#/downloads">
+                {{ downloader.numberWaiting() > 0 && downloader.numberWaiting() || '' }}
+                <span class="fi-data-transfer-download"></span>
+            </a>
+
+    	    <input type="text" id="rechercher" name="rechercher" ng-model="rechercher" placeholder="Rechercher..." />
+    	    <input type="submit" class="hide" />
+    	</form>
+    </div>
+  </div>
+  <div class="barred"></div>
+</div>
+
+<div id="wcplayer" ng-if="wcplayer.displayed">
+    <div style="position: fixed; top: 20px; right: 20px;">
+        <a ng-click="wcplayer.close()" href>
+            Fermer
+        </a>
+    </div>
+    <h2 class="text-center">
+        {{ wcplayer.getCurrentTitle() }}
+    </h2>
+    <div id="playerFilm" style="height: 40vw; width: 70vw; max-height: 70vh; margin-left: 15vw;"></div>
+    <table style="width: auto; margin: 0 auto;">
+        <tr>
+            <td>
+                <kbd>espace</kbd> : play/pause
+            </td>
+            <td>
+                <kbd>F</kbd> : plein-écran
+            </td>
+            <td>
+                <kbd>B</kbd> : changer de piste audio
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <kbd>V</kbd> : changer de sous-titres
+            </td>
+            <td>
+                <kbd>G</kbd> : avancer les sous-titres
+            </td>
+            <td>
+                <kbd>⇧ + ←→</kbd> : se déplacer de 10s
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <kbd>+</kbd> <kbd>-</kbd> : changer la taille des sous-titres
+            </td>
+            <td>
+                <kbd>H</kbd> : retarder les sous-titres
+            </td>
+            <td>
+                <kbd>⇧ + alt + ←→</kbd> : se déplacer de 5min
+            </td>
+        </tr>
+    </table>
+</div>
+
+  <div id="body" ng-view></div>
+
+  <!-- <script src="js/foundation.min.js"></script>
+  <script src="js/foundation/foundation.dropdown.js"></script>
+  <script>
+	$(document).foundation();
+</script> -->
+</body>
+</html>

@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="small-12 medium-3 large-2 columns"><img src="api/data/music/artistes/{{ artist.aid }}.jpg" alt="{{ artist.name }}" /></div>
+  <div class="small-12 medium-9 large-10 columns">
+  	<h2>{{ artist.name }}</h2>
+  </div>
+</div>
+<p><br /><br /></p>
+<div class="row" ng-repeat="album in artist.albums">
+	<div class="small-12 medium-3 large-1 columns">
+		<img src="api/data/music/albums/{{ album.alid }}.jpg" alt="{{ album.title }}" /><br />
+		<span class="legende">{{ album.release_date | amCalendar }}</span>
+	</div>
+	<div class="small-12 medium-9 large-6 columns">
+		<h4>{{ album.title }}</h4>
+		<table>
+			<tbody>
+				<tr ng-repeat="track in album.tracks" ng-class="{calt: $even && pmid != track.mid, hover: pmid == track.mid}" ng-click="afffiles(album.alid, track.mid, track.files)" class="secondc">
+					<td class="tplay"><a title="{{ (player.play && player.mid == track.mid) && 'Pause' || 'Play' }}" ng-click="lplay(track)"><span class="{{ (player.play && player.mid == track.mid) && 'fi-media-pause' || 'fi-media-play' }}"></span></a></td>
+					<td class="text-center tposition"><strong>{{ track.track_position | affZero }}</strong></td>
+					<td>{{ track.title }}</td>
+					<td class="text-center tduree">{{ track.duration | durees }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="small-12 medium-12 large-5 columns">
+	<div ng-show="palid == album.alid">
+		<h4>&nbsp;</h4>
+		<table>
+			<tbody>
+				<tr ng-repeat="fichier in ftracks" ng-class-odd="'calt'">
+					<td><a title="Télécharger ce fichier" href="ftp://{{ (fichier.serveur == 'thunder' && fichier.seuil) && 'thunder2' || fichier.serveur }}{{ fichier.chemin_complet }}" ng-click="clickf(fichier.fichier); (fichier.nb_clics = 1*fichier.nb_clics + 1)">{{ fichier.nom }}</a> <a title="Voir le dossier contenant ce fichier" href="#/dossier/{{ fichier.parent }}" ng-click="clickf(fichier.parent)"><span class="fi-folder"></span></a></td>
+					<td class="text-center">{{ fichier.nb_clics }}</td>
+					<td class="text-center">{{ fichier.taille | humanSize }}</td>
+					<td class="text-center">{{ fichier.serveur }}</td>
+					<td><a title="Cliquez ici si vous trouvez que ce fichier a été mal identifié et qu'il ne correspond pas à ce morceau/cet album/cet artiste" ng-click="errorf(fichier.fichier); errorSend = true" ng-hide="errorSend"><span class="fi-warning"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	<p style="clear: both; margin-top: 10px; margin-bottom: 10px;"><br /></p>
+</div>

@@ -1,0 +1,32 @@
+{
+  "name": "Fruits",
+  "version": "0.7.0",
+  "description": "Il a Fruits, il a tout compris",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom/electron-quick-start.git"
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/atom/electron-quick-start/issues"
+  },
+  "homepage": "https://github.com/atom/electron-quick-start#readme",
+  "dependencies": {
+    "electron-json-storage": "^1.0.0",
+    "ftp": "^0.3.10",
+    "ftp-ct": "^0.4.4",
+    "mkdirp": "^0.5.1",
+    "wcjs-player": "*"
+  }
+}

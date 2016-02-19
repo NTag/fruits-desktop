@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="small-12 medium-3 large-2 columns"><img src="http://fruits/api/data/series/poster/{{ serie.tmdbid }}.jpg" alt="{{ serie.nom }}" /></div>
+  <div class="small-12 medium-9 large-10 columns">
+  	<h2>{{ serie.nom }}</h2>
+  	<br />
+  	<span ng-show="serie.tin_production">Depuis </span>{{ serie.fyear }}<span ng-hide="serie.tin_production">-{{ serie.lyear }}</span> • {{ serie.tepisode_run_time }} min • {{ serie.tgenres }} • {{ serie.torigin_country }} ({{ serie.tnetwork }}) • <span ng-bind-html="serie.tpopularity | ilog | stars"></span><br /><br /><br />
+  	<p class="text-justify">
+  		{{ serie.toverview }}
+  	</p>
+  </div>
+</div>
+
+<div class="row">
+	<div class="small-12 medium-3 large-2 columns">
+		<h3>Saisons</h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="saison in serie.saisons" ng-click="affep(saison.id, saison.numero)" ng-class="{calt: $even && nsaison != saison.numero, hover: nsaison == saison.numero}">
+					<td>Saison {{ saison.numero }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="small-12 medium-9 large-4 columns">
+		<div ng-show="fep">
+		<h3>Épisodes <a title="Télécharger toute la saison d'un coup !" ng-click="preDlSaison(episodes)" ng-show="!choixQualite && !dlLance" class="ppetit"><span class="fi-data-transfer-download"></span> Télécharger la saison</a> <select ng-hide="!choixQualite || dlLance" class="petit" ng-model="langueChoisie"><option value="none">Sous-Titres :</option><option ng-repeat="langue in choixLangues" ng-value="langue">{{ langue == 'fr' && "Français" || "Anglais" }}</option></select> <select ng-hide="!choixQualite || dlLance" class="petit" ng-model="qualiteChoisie" ng-change="dlSaison()"><option value="none">Qualité : </option><option ng-repeat="(key, qualite) in choixQualite | orderBy:nb_clics:true" ng-value="key">{{ qualite.nom }} ({{ qualite.taille | humanSize }}, {{ qualite.nb_clics }} clics)</option></select> <small ng-show="dlLance">Début dans quelques secondes...</small></h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="ep in episodes" ng-class="{calt: $even && epn != ep.episode, hover: epn == ep.episode}" ng-click="affepf(ep.episode, ep.ep, ep.sub)" class="secondc">
+					<td class="text-center"><strong>{{ ep.episode | affZero }}</strong></td>
+					<td>{{ ep.tname }}</td>
+					<td class="text-center">{{ ep.tdate | amCalendar }}</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	<div class="small-12 medium-12 large-6 columns">
+	<div ng-show="fepf">
+		<h3>Fichiers</h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="fichier in epf" ng-class-odd="'calt'">
+					<td>
+                        <a title="Regarder ce fichier" ng-click="playFile('ftp://' + fichier.serveur + fichier.chemin_complet, fichier)">
+                            {{ fichier.nom }}
+                        </a>
+                        <a title="Voir le dossier contenant ce fichier" href="#/dossier/{{ fichier.parent }}" ng-click="clickf(fichier.parent)">
+                            <span class="fi-folder"></span>
+                        </a>
+                        <a href ng-click="addDownload(epn, fichier)">
+                            <span class="fi-data-transfer-download"></span>
+                        </a>
+                    </td>
+					<td class="text-center">{{ fichier.nb_clics }}</td>
+					<td class="text-center">{{ fichier.taille | humanSize }}</td>
+					<td class="text-center">{{ fichier.serveur }}</td>
+					<td><a title="Cliquez ici si vous trouvez que ce fichier a été mal identifié et qu'il ne correspond pas à cette série/cet épisode" ng-click="errorf(fichier.id); errorSend = true" ng-hide="errorSend"><span class="fi-warning"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div ng-show="eps.length > 0">
+		<h3>Sous-Titres</h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="fichier in eps" ng-class-odd="'calt'">
+					<td><a title="Télécharger ce fichier" href="ftp://{{ (fichier.serveur == 'thunder' && seuil()) && 'thunder2' || fichier.serveur }}{{ fichier.chemin_complet }}" ng-click="clickf(fichier.id); (fichier.nb_clics = 1*fichier.nb_clics + 1)">{{ fichier.nom }}</a> <a title="Voir le dossier contenant ce fichier" href="#/dossier/{{ fichier.parent }}" ng-click="clickf(fichier.parent)"><span class="fi-folder"></span></a></td>
+					<td class="text-center">{{ fichier.nb_clics }}</td>
+					<td class="text-center">{{ fichier.taille | humanSize }}</td>
+					<td class="text-center">{{ fichier.serveur }}</td>
+					<td><a title="Cliquez ici si vous trouvez que ce fichier a été mal identifié et qu'il ne correspond pas à cette série/cet épisode" ng-click="errorf(fichier.id); errorSend = true" ng-hide="errorSend"><span class="fi-warning"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	</div>
+</div>

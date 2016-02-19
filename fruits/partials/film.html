@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="small-12 medium-3 large-2 columns"><img src="http://fruits/api/data/films/poster/{{ film.tmdbid }}.jpg" alt="{{ film.titlefr }}" /></div>
+  <div class="small-12 medium-9 large-10 columns">
+  	<h2>{{ film.titlefr }}</h2>
+  	<br />
+  	{{ film.release_date | amCalendar }} • {{ film.runtime | duree }} • {{ film.genres }} • {{ film.production }} • <span ng-bind-html="film.vote | stars"></span><br /><br /><br />
+  	<p class="text-justify">
+  		{{ film.overview }}
+  	</p>
+  </div>
+</div>
+<br /><br />
+
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Fichiers</h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="fichier in film.fichiers" ng-class-odd="'calt'">
+					<td>
+                        <a title="Télécharger ce fichier" href ng-click="playFilm('ftp://' + fichier.serveur + fichier.chemin_complet, fichier)">
+                            {{ fichier.nom }}
+                        </a>
+                        <a href ng-click="addDownload(fichier)">
+                            <span class="fi-data-transfer-download"></span>
+                        </a>
+                        <a title="Voir le dossier contenant ce fichier" href="#/dossier/{{ fichier.parent }}" ng-click="clickf(fichier.parent)">
+                            <span class="fi-folder"></span>
+                        </a>
+                    </td>
+					<td class="text-center">{{ fichier.langue }}</td>
+					<td class="text-center">{{ fichier.qualite }}</td>
+					<td class="text-center">{{ fichier.nb_clics }} clic{{ fichier.nb_clics | affs }}</td>
+					<td class="text-center">{{ fichier.taille | humanSize }}</td>
+					<td class="text-center">{{ fichier.serveur }}</td>
+					<td><a title="Cliquez ici si vous trouvez que ce fichier a été mal identifié et qu'il ne correspond pas à ce film" ng-click="errorf(fichier.fichier); errorSend = true" ng-hide="errorSend"><span class="fi-warning"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div ng-show="film.sub.length > 0">
+		<h3>Sous-Titres</h3>
+		<table>
+			<tbody>
+				<tr ng-repeat="fichier in film.sub" ng-class-odd="'calt'">
+					<td><a title="Télécharger ce fichier" href="ftp://{{ (fichier.serveur == 'thunder' && seuil()) && 'thunder2' || fichier.serveur }}{{ fichier.chemin_complet }}" ng-click="clickf(fichier.fichier)">{{ fichier.nom }}</a> <a title="Voir le dossier contenant ce fichier" href="#/dossier/{{ fichier.parent }}" ng-click="clickf(fichier.parent)"><span class="fi-folder"></span></a></td>
+					<td class="text-center">{{ fichier.langue }}</td>
+					<td class="text-center">{{ fichier.taille | humanSize }}</td>
+					<td class="text-center">{{ fichier.serveur }}</td>
+					<td><a title="Cliquez ici si vous trouvez que ce fichier a été mal identifié et qu'il ne correspond pas à ce film" ng-click="errorf(fichier.fichier); errorSend = true" ng-hide="errorSend"><span class="fi-warning"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,6 @@
+bower_components/
+*.log
+*~
+bots/tvnamer/files/
+.settings
+.DS_Store

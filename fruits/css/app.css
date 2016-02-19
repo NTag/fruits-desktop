@@ -1,0 +1,211 @@
+*, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Ubuntu', sans-serif;
+}
+body {
+    background-color: rgb(23, 24, 27);
+    color: white;
+    padding-top: 10px;
+}
+#header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: rgb(23, 24, 27);
+    opacity: 0.8;
+    z-index: 100000000;
+}
+.barred {
+    background:linear-gradient(to bottom, black, rgb(23, 24, 27));
+    clear: both;
+    height: 5px;
+}
+#titre {
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 1.2em;
+    margin-top: 12px;
+}
+#menu {
+    width: 100%;
+}
+#menu #categories {
+    float: left;
+}
+#categories .cat {
+    display: inline-block;
+    padding: 8px;
+    letter-spacing: 1px;
+    color: #c6c6c6;
+    min-width: 100px;
+    text-align: center;
+    font-size: 1.2em;
+}
+.cat.actif {
+    border-bottom: 5px solid #2ba6cb;
+}
+
+#options {
+	float: right;
+	padding-right: 20px;
+	margin-bottom: -16px;
+    width: 300px;
+}
+#bdl {
+    font-size: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid #2ba6cb;
+    border-radius: 5px;
+    padding: 4px;
+    padding-bottom: 2px;
+    margin-right: 10px;
+}
+#body {
+    clear: both;
+    padding: 20px;
+    margin-top: 70px;
+}
+#lecteurm {
+    visibility: hidden;
+}
+#dlf {
+    height: 0px;
+    width: 0px;
+    overflow: hidden;
+    visibility: hidden;
+}
+.legende {
+	color: gray;
+	font-size: 0.6em;
+	margin-top: -6px;
+}
+input[type=text], input[type=submit] {
+	background: none;
+	color: white;
+	border-radius: 5px;
+	height: 30px;
+}
+input[type=text]:focus {
+	background: none;
+}
+#rechercher {
+    width: 200px;
+    display: inline-block;
+}
+.numsaison {
+	position: relative;
+	background-color: rgba(23, 24, 27, 0.8);
+    width: 100%;
+    top: -40px;
+    margin-bottom: -20px;
+}
+.tplay {
+    width: 20px;
+}
+.tposition {
+    width: 20px;
+}
+.tduree {
+    width: 30px;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: white;
+}
+table, tr, td, th, tbody, thead {
+	border-collapse: collapse;
+}
+table {
+	background-color: rgba(23, 24, 27, 0.8);
+	padding: 8px;
+	width: 100%;
+}
+td {
+	padding-left: 20px;
+}
+td, th {
+	padding: 10px;
+}
+.calt {
+	background-color: rgb(31,32,37);
+}
+tr.hover {
+	background-color: rgb(25,44,77);
+}
+.secondc {
+	color: rgb(135,140,144);
+}
+tr {
+	cursor: pointer;
+}
+.flashy {
+	color: #2ba6cb;
+}
+.leger {
+    font-weight: 100;
+    color: #AAAAAA;
+    font-size: 0.7em;
+}
+select {
+    -moz-appearance: window;
+    background-image: none;
+    background-color: rgba(23, 24, 27, 0.8);
+    width: auto;
+    border: none;
+    padding: 8px;
+    letter-spacing: 1px;
+    color: #c6c6c6;
+    text-align: center;
+    font-size: 1em;
+    margin: 0px;
+    margin-bottom: -4px;
+    margin-top: -4px;
+    outline: none;
+}
+select:hover {
+    background-image: none;
+    background-color: rgba(23, 24, 27, 0.8);
+    cursor: pointer;
+}
+select option {
+   color: white;
+   border: none;
+}
+select:not(:checked) {
+   color: #2ba6cb;
+}
+@-moz-document url-prefix() {
+.select{
+     background-image: none;
+  }
+}
+select.petit {
+    padding: 2px;
+    font-size: 0.6em;
+}
+.f-dropdown, .f-dropdown.drop-left {
+    background-color: rgb(23, 24, 27);
+}
+.f-dropdown li:hover, .f-dropdown li:focus {
+    background-color: black;
+}
+.f-dropdown li a {
+    color: #2ba6cb;
+}
+.ppetit {
+    font-size: 0.7em;
+}
+
+
+#wcplayer {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999999999;
+    top: 0;
+    background-color: rgb(23, 24, 27);
+}
+
+/* Override wcjs-player style */
+.wcp-anim-icon-play:before { font-family: "Glyphs"; }
+.wcp-anim-icon-pause:before { font-family: "Glyphs"; }

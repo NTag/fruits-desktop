@@ -1,0 +1,20 @@
+{
+  "name": "Fruits",
+  "description": "Fruits",
+  "version": "5.0",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.19",
+    "angular-mocks": "1.2.19",
+    "angular-route": "1.2.19",
+    "angular-resource": "1.2.19",
+    "jquery": "1.10.2",
+    "angular-animate": "1.2.19",
+    "momentjs": "2.6.0",
+    "angular-moment": "0.7.1",
+    "foundation": "5.2.2",
+    "ngInfiniteScroll": "1.1.2",
+    "open-iconic": "1.1.0",
+    "lodash": "~4.3.0"
+  }
+}

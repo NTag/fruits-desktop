@@ -1,0 +1,67 @@
+<div class="row">
+	<div class="small-12 columns">
+		Les fichiers sont enregistrés ici : {{ downloader.savingPath }} <a href ng-click="changeSavingPath()">Modifier</a><br /><br />
+
+        <div ng-if="downloader.numberWaiting() > 0">
+            {{ downloader.numberWaiting() }} fichier{{ downloader.numberWaiting() | affs }} • {{ downloader.sizeRemaining() | humanSize }}
+            <span ng-if="downloader.getTotalETA()">
+                • {{ downloader.getTotalETA() }}
+            </span>
+        </div>
+
+        <br /><br />
+        <table>
+            <tr ng-repeat-start="file in downloader.files" ng-class-odd="'calt'" ng-class="file.finished && 'hover' || ''">
+                <td>
+                    {{ file.displayedName }}
+                </td>
+                <td>
+                    <span ng-if="file.active && downloader.getCurrentSpeed()">
+                        {{ downloader.getCurrentSpeed() | humanSize }} / s
+                    </span>
+                </td>
+                <td>
+                    <span ng-if="file.active && downloader.getETA()">
+                        {{ downloader.getETA() | durees }}
+                    </span>
+                </td>
+                <!-- <td>
+                    <span ng-if="file.progress > 0">
+                        {{ file.progress/file.totalSize*100 | number:1 }}&nbsp;%
+                    </span>
+                    <span ng-if="file.progress == 0">
+                        -&nbsp;%
+                    </span>
+                </td> -->
+                <td class="text-right">
+                    <span ng-if="file.active && file.progress > 0">
+                        {{ file.progress | humanSize}} /
+                    </span>
+                    {{ file.totalSize | humanSize }}
+                </td>
+                <td>
+                    <span ng-if="file.active">
+                        <a href ng-if="file.pause" ng-click="downloader.resume()">
+                            <span class="fi-media-play"></span>
+                        </a>
+                        <a href ng-if="!file.pause" ng-click="downloader.pause()">
+                            <span class="fi-media-pause"></span>
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <a href ng-click="downloader.abort(file)">
+                        <span class="fi-x"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-repeat-end ng-if="file.active">
+                <td colspan="6" style="padding: 0;">
+                    <div style="background: linear-gradient(to right, rgb(25,44,77), rgb(25,44,77) {{ file.progress/file.totalSize*100 | number:1 }}%, transparent {{ file.progress/file.totalSize*100 | number:1 }}%, transparent); height: calc(20px + 1em); margin-top: calc(-20px - 1em);">
+                        &nbsp;
+                    </div>
+                </td>
+            </tr>
+        </table>
+	</div>
+</div>

@@ -1,0 +1,8 @@
+node_modules
+Fruits-darwin-x64
+Fruits-win32-ia32
+Fruits-win32-x64
+installers
+.DS_Store
+installers-ia32
+installers-x64
